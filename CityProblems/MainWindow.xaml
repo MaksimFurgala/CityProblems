@@ -1,0 +1,380 @@
+﻿<dx:ThemedWindow x:Class="CityProblems.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+        xmlns:dxnav="http://schemas.devexpress.com/winfx/2008/xaml/navigation"
+        xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+        xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+        xmlns:dxlc="http://schemas.devexpress.com/winfx/2008/xaml/layoutcontrol"
+        xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+        xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"         
+        Title="Городские проблемы" Icon="./Media/icons/icon.ico" MinHeight="450" MaxHeight="450"  MinWidth="910" MaxWidth="910">
+    <Grid>
+        <Grid.ColumnDefinitions></Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <dxnav:TileNavPane>
+                <dxnav:TileNavPane.NavButtons>
+                    <dxnav:NavButton x:Name="AddProblemPopup"
+                                     Content="Добавить проблему"
+                                     GlyphAlignment="Left"
+                                     AllowGlyphTheming="True"
+                                     Glyph="{dx:DXImageGrayscale Image=Add_32x32.png}"
+                                     Padding="5"
+                                     ToolTip="Создать новую запись о городской проблеме"
+                                     Click="AddProblemPopup_Click">
+                    </dxnav:NavButton>
+                </dxnav:TileNavPane.NavButtons>
+            </dxnav:TileNavPane>
+        </StackPanel>
+        <Popup x:Name="AddedProblemPopup" StaysOpen="False" Placement="Mouse">
+            <Grid>
+                <dxdo:LayoutPanel x:Name="AddProblemPanel"
+                                  Caption="Добавление новой проблемы"
+                                  CaptionHorizontalAlignment="Center"
+                                  ShowPinButton="False"
+                                  ShowBorder="True"
+                                  ShowCloseButton="False"
+                                  Background="White">
+                    <dxlc:LayoutControl Orientation="Vertical">
+                        <TextBlock Text="Местоположение"
+                                   Foreground="DarkGray"
+                                   HorizontalAlignment="Center"/>
+                        <dxlc:LayoutItem Label="Адрес:" HorizontalAlignment="Center" MinWidth="250">
+                            <dxe:TextEdit x:Name="AdressText"
+                                          ValidateOnTextInput="True" ValidateOnEnterKeyPressed="True" Validate="AdressText_Validate"/>
+                        </dxlc:LayoutItem>
+                        <TextBlock x:Name="ErrorAdress"
+                                   HorizontalAlignment="Center"
+                                   MinWidth="250"
+                                   Foreground="Red"
+                                   Visibility="Collapsed">
+                            Введите адрес для новой проблемы!
+                        </TextBlock>
+                        <TextBlock Text="Проблема"
+                                   Foreground="DarkGray"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel MinWidth="350">
+                            <TabControl x:Name="DescriptionTab" TabStripPlacement="Left" Margin="0, 0, 0, 10" SelectionChanged="DescriptionTab_SelectionChanged">
+                                <TabItem x:Name="RoadsTab" Header="Дороги">
+                                    <TabItem.Content>
+                                        <StackPanel x:Name="RoadsPanel"
+                                                    Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="22" Content="Яма на дороге" ></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="45" Content="Разбитая дорога"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="1" Content="Нет люка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="46" Content="Нет разметки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="20" Content="Опасный участок"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="38" Content="Вечная лужа"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="30"  Content="Мусор на дороге"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="21" Content="Ремонт дороги"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="44"  Content="Проезд закрыт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="11" Content="Дорога не очищена от снега"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="55" x:Name="exceptionCheck_1" Content="Другая проблема" Checked="ExceptionCheck_1_Checked" Unchecked="ExceptionCheck_1_Unchecked"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+
+                                <TabItem x:Name="TransportTab"
+                                     Header="Транспорт">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="31" Content="Незаконная парковка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="43" Content="Требуется остановка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="47" Content="Благоустройство остановки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="18" Content="Нужен светофор"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="32" Content="Знак-ловушка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="24" Content="Нет знака"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="17" Content="Нужен &quot;лежачий полицейский&quot;"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="19" Content="Необходим пешеходный переход"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="14" Content="Нарушение ПДД водителем общественного транспорта"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="48" Content="Заброшенное авто"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="7" Content="Плохо ходит общественный транспорт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="55" x:Name="exceptionCheck_2" Content="Другая проблема" Checked="ExceptionCheck_2_Checked" Unchecked="ExceptionCheck_2_Unchecked"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem x:Name="MunicipalEconomyTab" Header="Городское хозяйство">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="8" Content="Не работает освещение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="23" Content="Нужен фонарь"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="33" Content="Нелегальная свалка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="26" Content="Нужен пандус"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="39" Content="Необходим тротуар"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="16" Content="Нет мусорных баков"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="9" Content="Не вывозится мусор"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="34"  Content="Мусор от организации"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="51" Content="Заброшенный объект"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="35" Content="Проблема водостока"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="6" Content="Течет крыша"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="13" Content="Не работает лифт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="36" Content="Благоустройство территории"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="50" Content="Необходима детская площадка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="49" Content="Экологическая проблема"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="27" Content="Плохо работает отопление"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="4" Content="Отсутствует горячее водоснабжение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="5" Content="Отсутствует холодное водоснабжение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="28" Content="Антисанитария"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="29" Content="Энергообеспечение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="3" Content="Газообеспечение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="15" Content="Наледь на крыше"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="52" x:Name="exceptionCheck_3" Content="Другая проблема" Checked="ExceptionCheck_3_Checked" Unchecked="ExceptionCheck_3_Unchecked"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem x:Name="SecurityTab" Header="Безопасность">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="10" Content="Бесхозный объект"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="40" Content="Нелегалы"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="2" Content="Бездомные собаки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="25" Content="Места общественных правонарушений"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="41" Content="Опасное использование помещений в жилых зданиях"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="12" Content="Ветхое жилье"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="42" Content="Требуется ограждение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="53" x:Name="exceptionCheck_4" Content="Другая проблема" Checked="ExceptionCheck_4_Checked" Unchecked="ExceptionCheck_4_Unchecked"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                            </TabControl>
+                        </StackPanel>
+                        <StackPanel x:Name="AnnotationPanel"
+                                    Orientation="Vertical">
+                            <TextBlock Text="Пояснение о проблеме"
+                                       Foreground="DarkGray"
+                                       HorizontalAlignment="Center"/>
+                            <TextBox x:Name="AnnotationText"
+                                     MinHeight="50"
+                                     MaxHeight="55"
+                                     Width="350"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <dx:SimpleButton x:Name="AddProblem"
+                                             MaxWidth="190"
+                                             Glyph="{dx:DXImage Image=Add_32x32.png}"
+                                             Content="Добавить проблему"
+                                             Click="AddProblem_Click"/>
+                        </StackPanel>
+                    </dxlc:LayoutControl>
+                </dxdo:LayoutPanel>
+            </Grid>
+        </Popup>
+        <dxg:GridControl x:Name="GridProblems"
+                         Grid.Row="1"
+                         ItemsSource="{Binding}">
+            <dxg:GridControl.View>
+                <dxg:TableView AllowFilterEditor="False"
+                               ShowCriteriaInAutoFilterRow="True"
+                               SearchPanelClearOnClose="True"
+                               IsGroupFooterMenuEnabled="True"
+                               IsTotalSummaryMenuEnabled="True"
+                               ShowAutoFilterRow="True"
+                               AllowEditing="False"
+                               NavigationStyle="Row">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition ApplyToRow="True"
+                                             FieldName="Status"
+                                             Expression="[Status] = 2">
+                            <dxg:FormatCondition.Format>
+                                <dxg:Format Background="LightGreen"/>
+                            </dxg:FormatCondition.Format>
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition ApplyToRow="True"
+                                             FieldName="Status"
+                                             Expression="[Status] = 1">
+                            <dxg:FormatCondition.Format>
+                                <dxg:Format Background="#FFFDFD5A"/>
+                            </dxg:FormatCondition.Format>
+                        </dxg:FormatCondition>
+                    </dxg:TableView.FormatConditions>
+                    <dxg:TableView.RowCellMenuCustomizations>
+                        <dxb:BarButtonItem x:Name="UpdateStatusDone"
+                                           Content="Выполнено"
+                                           Glyph="{dx:DXImage Image=Apply_16x16.png}"
+                                           ItemClick="UpdateStatusDone_ItemClick"/>
+                        <dxb:BarButtonItem x:Name="UpdateStatusInProcess"
+                                           Content="В процессе"
+                                           Glyph="{dx:DXImage Image=FormatNumberTime_16x16.png}"
+                                           ItemClick="UpdateStatusInProcess_ItemClick"/>
+                        <dxb:BarButtonItem x:Name="UpdateProblem"
+                                           Content="Редактировать проблему"
+                                           Glyph="{dx:DXImage Image=Edit_16x16.png}"
+                                           ItemClick="UpdateProblem_ItemClick"/>
+                        <dxb:BarButtonItem x:Name="DeleteProblem"
+                                           Content="Удалить проблему"
+                                           Glyph="{dx:DXImage Image=Delete_16x16.png}"
+                                           ItemClick="DeleteProblem_ItemClick"/>
+                    </dxg:TableView.RowCellMenuCustomizations>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn FieldName="Adress"
+                            HorizontalHeaderContentAlignment="Center"
+                            Header="Адрес"
+                            MinWidth="180">
+            </dxg:GridColumn>
+
+            <dxg:GridColumn FieldName="Description"
+                            HorizontalHeaderContentAlignment="Center"
+                            Header="Проблема"
+                            MinWidth="300">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings TextWrapping="WrapWithOverflow"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Annotation"
+                            HorizontalHeaderContentAlignment="Center"
+                            Header="Пояснение"
+                            MinWidth="375">
+                <dxg:GridColumn.EditSettings>
+                    <dxe:TextEditSettings TextWrapping="Wrap"/>
+                </dxg:GridColumn.EditSettings>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="Status" Visible="False"></dxg:GridColumn>
+            <dxg:GridColumn FieldName="Priority" Visible="False"></dxg:GridColumn>
+        </dxg:GridControl>
+
+        <Popup x:Name="UpdateProblemPopup" StaysOpen="False" Placement="Mouse">
+            <Grid>
+                <dxdo:LayoutPanel x:Name="UpdateProblemPanel"
+                                  Caption="Редактирование проблемы"
+                                  CaptionHorizontalAlignment="Center"
+                                  ShowPinButton="False"
+                                  ShowBorder="True"
+                                  ShowCloseButton="False"
+                                  Background="White">
+                    <dxlc:LayoutControl Orientation="Vertical">
+                        <TextBlock Text="Местоположение"
+                                   Foreground="DarkGray"
+                                   HorizontalAlignment="Center"/>
+                        <dxlc:LayoutItem Label="Адрес:" HorizontalAlignment="Center" MinWidth="250">
+                            <dxe:TextEdit x:Name="AdressTextUpd"
+                                          ValidateOnTextInput="True" ValidateOnEnterKeyPressed="True" Validate="AdressTextUpd_Validate"/>
+                        </dxlc:LayoutItem>
+                        <TextBlock x:Name="ErrorAdressUpd"
+                                   HorizontalAlignment="Center"
+                                   MinWidth="250"
+                                   Foreground="Red"
+                                   Visibility="Collapsed">
+                            Введите адрес для новой проблемы!
+                        </TextBlock>
+                        <TextBlock Text="Проблема"
+                                   Foreground="DarkGray"
+                                   HorizontalAlignment="Center"/>
+                        <StackPanel MinWidth="350">
+                            <TabControl x:Name="DescriptionTabUpd" TabStripPlacement="Left" Margin="0, 0, 0, 10" SelectionChanged="DescriptionTabUpd_SelectionChanged">
+                                <TabItem x:Name="RoadsTabUpd" Header="Дороги">
+                                    <TabItem.Content>
+                                        <StackPanel x:Name="RoadsPanelUpd"
+                                                    Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="22" Content="Яма на дороге" ></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="45" Content="Разбитая дорога"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="1" Content="Нет люка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="46" Content="Нет разметки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="20" Content="Опасный участок"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="38" Content="Вечная лужа"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="30"  Content="Мусор на дороге"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="21" Content="Ремонт дороги"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="44"  Content="Проезд закрыт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="11" Content="Дорога не очищена от снега"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="55" x:Name="exceptionCheck_1_upd" Content="Другая проблема"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+
+                                <TabItem x:Name="TransportTabUpd"
+                                     Header="Транспорт">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="31" Content="Незаконная парковка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="43" Content="Требуется остановка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="47" Content="Благоустройство остановки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="18" Content="Нужен светофор"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="32" Content="Знак-ловушка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="24" Content="Нет знака"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="17" Content="Нужен &quot;лежачий полицейский&quot;"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="19" Content="Необходим пешеходный переход"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="14" Content="Нарушение ПДД водителем общественного транспорта"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="48" Content="Заброшенное авто"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="7" Content="Плохо ходит общественный транспорт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="55" x:Name="exceptionCheck_2_Upd" Content="Другая проблема"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem x:Name="MunicipalEconomyTabUpd" Header="Городское хозяйство">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit TabIndex="8" Content="Не работает освещение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="23" Content="Нужен фонарь"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="33" Content="Нелегальная свалка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="26" Content="Нужен пандус"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="39" Content="Необходим тротуар"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="16" Content="Нет мусорных баков"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="9" Content="Не вывозится мусор"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="34"  Content="Мусор от организации"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="51" Content="Заброшенный объект"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="35" Content="Проблема водостока"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="6" Content="Течет крыша"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="13" Content="Не работает лифт"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="36" Content="Благоустройство территории"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="50" Content="Необходима детская площадка"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="49" Content="Экологическая проблема"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="27" Content="Плохо работает отопление"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="4" Content="Отсутствует горячее водоснабжение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="5" Content="Отсутствует холодное водоснабжение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="28" Content="Антисанитария"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="29" Content="Энергообеспечение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="3" Content="Газообеспечение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="15" Content="Наледь на крыше"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="52" x:Name="exceptionCheck_3_Upd" Content="Другая проблема"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                                <TabItem x:Name="SecurityTabUpd" Header="Безопасность">
+                                    <TabItem.Content>
+                                        <StackPanel Orientation="Vertical">
+                                            <dxe:CheckEdit Content="Бесхозный объект" ></dxe:CheckEdit>
+
+
+                                            <dxe:CheckEdit TabIndex="10" Content="Бесхозный объект"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="40" Content="Нелегалы"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="2" Content="Бездомные собаки"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="25" Content="Места общественных правонарушений"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="41" Content="Опасное использование помещений в жилых зданиях"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="12" Content="Ветхое жилье"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="42" Content="Требуется ограждение"></dxe:CheckEdit>
+                                            <dxe:CheckEdit TabIndex="53" x:Name="exceptionCheck_4_Upd" Content="Другая проблема"></dxe:CheckEdit>
+                                        </StackPanel>
+                                    </TabItem.Content>
+                                </TabItem>
+                            </TabControl>
+                        </StackPanel>
+                        <StackPanel x:Name="AnnotationPanelUpd"
+                                    Orientation="Vertical">
+                            <TextBlock Text="Пояснение о проблеме"
+                                       Foreground="DarkGray"
+                                       HorizontalAlignment="Center"/>
+                            <TextBox x:Name="AnnotationTextUpd"
+                                     MinHeight="50"
+                                     MaxHeight="55"
+                                     Width="350"
+                                     TextWrapping="Wrap"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Vertical">
+                            <dx:SimpleButton x:Name="UpdateProblemButton"
+                                             MaxWidth="190"
+                                             Glyph="{dx:DXImage Image=Save_32x32.png}"
+                                             Content="Сохранить изменения"
+                                             Click="UpdateProblemButton_Click"/>
+                        </StackPanel>
+                    </dxlc:LayoutControl>
+                </dxdo:LayoutPanel>
+            </Grid>
+        </Popup>
+
+    </Grid>
+</dx:ThemedWindow>
